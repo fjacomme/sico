@@ -33,7 +33,7 @@ The coordinates in **sico** are defined using simple structs, with the following
 
 The triplet latitude/longitude/altitude is nowadays the most common way to position something of Earth.
 
-The `pos_lla` type is defined in [types/lla.hpp](include/sico/types/lla.hpp).
+The `pos_lla` type is defined in [types/lla.hpp](../include/sico/types/lla.hpp).
 
 The geoditic system used is [WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System#WGS84).
 
@@ -42,8 +42,6 @@ The geoditic system used is [WGS84](https://en.wikipedia.org/wiki/World_Geodetic
 When working locally, it is preferable to have a more intuitive coordinate system.
 
 These coordinates define a point as an offset in meters from another reference point and positive along the three axis east, north, and up.
-
-![ENU](https://en.wikipedia.org/wiki/Local_tangent_plane_coordinates#/media/File:ECEF_ENU_Longitude_Latitude_relationships.svg)
 
 These coordinates are used:
 
@@ -64,7 +62,7 @@ The choice depends mainly of the use case:
 For example, when positioning an entity into *Unreal Engine*, I would choose depending on my terrain size and curvature (or lack thereof).
 
 The `pos_enu`, `vel_enu`, `acc_enu` (and `pos_enu_m`, `vel_enu_m`, `acc_enu_m` for mercator) types are defined
-in [types/enu.hpp](include/sico/types/lla.hpp).
+in [types/enu.hpp](../include/sico/types/lla.hpp).
 
 ### local
 
@@ -72,7 +70,7 @@ We often have to define a position relative to the center of an object, for exam
 
 To stay coherent with *ENU*, **sico** uses the *right-front-up* system.
 
-The `pos_local`, `vel_local` and `acc_local` types are defined in [types/enu.hpp](include/sico/types/local.hpp).
+The `pos_local`, `vel_local` and `acc_local` types are defined in [types/enu.hpp](../include/sico/types/local.hpp).
 
 ### other coordinates
 
@@ -98,5 +96,5 @@ These types exists in two reference frames:
     * the roll is the bank angle, positive clockwise
 * `ori_local` (and `quat_local`), with the same conventions but around the up, right and front axis.
 
-The common traits of these types are defined in [types/orientations.hpp](include/sico/types/orientations.hpp),
+The common traits of these types are defined in [types/orientations.hpp](../include/sico/types/orientations.hpp),
 and their respective definitions in `enu.hpp` and `local.hpp`.
