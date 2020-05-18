@@ -8,19 +8,19 @@ The frames are simple wrapper classes around the conversion functions, and keepi
 
 This frames converts a geodetic *LLA* position to an *east-north-up* local position, relative to local tangent plane centered on the reference point.
 
-See [frames/local_tangent.hpp](include/sico/frames/local_tangent.hpp).
+See [frames/local_tangent.hpp](../include/sico/frames/local_tangent.hpp).
 
 ## mercator
 
 This frames converts a geodetic *LLA* position to an *east-north-up* local position, relative to mercator projection centered on the reference longitude.
 
-See [frames/mercator.hpp](include/sico/frames/mercator.hpp).
+See [frames/mercator.hpp](../include/sico/frames/mercator.hpp).
 
 ## object
 
 This frames converts a geodetic *LLA* position or an *east-north-up* to a local position, relative to the position and orientation of the object.
 
-See [frames/object_local.hpp](include/sico/frames/object_local.hpp).
+See [frames/object_local.hpp](../include/sico/frames/object_local.hpp).
 
 ## child object
 
@@ -28,4 +28,4 @@ This frames converts a local position to a local position, relative to the posit
 
 For example, to obtain the relative position of the wheel of a car, itself on a ferry boat.
 
-See [frames/object_local.hpp](include/sico/frames/object_local.hpp).
+See [frames/object_local.hpp](../include/sico/frames/object_local.hpp).
