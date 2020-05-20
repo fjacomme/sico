@@ -1,5 +1,8 @@
 # sico
 
+![Ubuntu](https://github.com/fjacomme/sico/workflows/Ubuntu/badge.svg)
+![Windows](https://github.com/fjacomme/sico/workflows/Windows/badge.svg)
+
 ## overview
 
 The **Simulation Coordinates** library offers:
