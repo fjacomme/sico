@@ -1,10 +1,18 @@
 #pragma once
+#include "sico/types/angles.hpp"
 #include "sico/types/forward.hpp"
 #include "sico/types/units.hpp"
 
 #include <cmath>
 
 namespace sico {
+
+namespace internal {
+void quat_to_ori(
+    double x, double y, double z, double w, radians& yaw, radians& pitch, radians& roll);
+void ori_to_quat(
+    radians yaw, radians pitch, radians roll, double& x, double& y, double& z, double& w);
+} // namespace internal
 
 /// Local orientation Tait-Bryan angles
 template<typename Ref>
@@ -55,10 +63,6 @@ inline bool operator==(ori<Ref> const& o1, ori<Ref> const& o2)
 }
 
 namespace internal {
-void quat_to_ori(
-    double x, double y, double z, double w, radians& yaw, radians& pitch, radians& roll);
-void ori_to_quat(
-    radians yaw, radians pitch, radians roll, double& x, double& y, double& z, double& w);
 
 template<typename Ref>
 ori<Ref> vec_to_ori(meters mx, meters my, meters mz)

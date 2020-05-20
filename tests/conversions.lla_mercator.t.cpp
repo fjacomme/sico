@@ -51,7 +51,7 @@ TEST_CASE("Conversions/Mercator")
         ss.precision(28);
         double lat, lon, x, y;
         ss >> lat >> lon >> x >> y;
-        if (abs(lat) > 85 || abs(lon) > 70)
+        if (std::abs(lat) > 85 || std::abs(lon) > 70)
             continue; // the method used is not exact enough for such offsets
         testzero(lat, lon, x, y);
     }

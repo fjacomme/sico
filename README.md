@@ -102,7 +102,8 @@ More information about:
 
 By default, **sico** requires nothing more than cmake and a **c++14** compiler.
 
-To build the tests, you need [Catch2](https://github.com/catchorg/Catch2).
+To build the tests, you need [Catch2](https://github.com/catchorg/Catch2), and run
+cmake with `-DSICO_BUILD_TESTS=ON`.
 
 Just extract the release in a `deps/Catch2-2.12.1` folder.
 

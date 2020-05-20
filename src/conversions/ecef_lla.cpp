@@ -23,6 +23,7 @@ struct {
 
 pos_lla sico::to_lla(pos_ecef const& from)
 {
+    using std::abs;//very important with gcc
     auto const x   = raw(from.x);
     auto const y   = raw(from.y);
     auto const z   = raw(from.z);

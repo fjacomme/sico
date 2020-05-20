@@ -4,7 +4,7 @@
 
 using namespace sico;
 
-void main()
+int main()
 {
     using namespace sico::literals;
     pos_lla const radar_pos { 42_deg, 2_deg, 123_m };
@@ -31,6 +31,7 @@ void main()
     std::cout << "radar_to_plane: " << radar_to_plane << "\n";
     std::cout << "plane_from_rad: " << plane_from_radar << "\n";
     std::cout << "plane_from_ant: " << plane_from_antenna << "\n";
+    return 0;
 }
 
 void on_gps_position_received(double longitude_deg, double latitude_deg, double altitude_m)

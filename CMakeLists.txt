@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-include(ExternalProject)
+include(FetchContent)
 include(CMakePackageConfigHelpers)
 set(CMAKE_CXX_STANDARD 17)
 
@@ -8,6 +8,8 @@ project(sico VERSION 1.0.0)
 option(SICO_USE_EIGEN "Use the Eigen library for linear algebra" OFF)
 option(SICO_USE_HOLTHAUS_UNITS "Use Holthaus Units library" OFF)
 option(SICO_USE_BOOST_UNITS "Use Boost Units library" OFF)
+option(SICO_BUILD_TESTS "Build tests" ON)
+option(SICO_TEST_COVERAGE "Enable test coverage" ON)
 
 if (SICO_USE_HOLTHAUS_UNITS AND SICO_USE_BOOST_UNITS)
   message(FATAL_ERROR "Incompatible options SICO_USE_HOLTHAUS_UNITS and SICO_USE_BOOST_UNITS")
@@ -16,7 +18,7 @@ endif()
 if(MSVC)
   set(SICO_COMP_OPTS /Wall /WX /wd4514)#4514: deleted inline functions
 else()
-  set(SICO_COMP_OPTS -Wall -Wextra -pedantic -Werror)
+  set(SICO_COMP_OPTS -Wall -Wextra -pedantic -Werror -frounding-math)
 endif()
 
 add_library(sico STATIC 
@@ -58,9 +60,14 @@ add_library(sico STATIC
   src/frames/object_local.cpp
 )
 
-
 if (SICO_USE_HOLTHAUS_UNITS)
-  set(Units_DIR ${CMAKE_CURRENT_SOURCE_DIR}/deps/units-3.0.0.alpha-2)
+  FetchContent_Declare(
+    Units
+    GIT_REPOSITORY https://github.com/nholthaus/units.git
+    GIT_TAG        v3.0.0.alpha-2
+  )
+  FetchContent_MakeAvailable(Units)
+  set(Units_DIR ${Units_SOURCE_DIR})
   target_compile_definitions(sico PUBLIC SICO_USE_HOLTHAUS_UNITS)
 endif()
 
@@ -97,9 +104,15 @@ add_executable(sico-examples examples/examples.cpp)
 target_link_libraries(sico-examples sico)
 target_include_directories(sico-examples PUBLIC ${Units_DIR} ${Eigen_DIR} ${Boost_INCLUDE_DIRS})
 
-set(Catch2_DIR ${CMAKE_CURRENT_SOURCE_DIR}/deps/Catch2-2.12.1)
-
-if(EXISTS ${Catch2_DIR})
+if (SICO_BUILD_TESTS)
+  
+  FetchContent_Declare(
+    Catch2
+    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+    GIT_TAG        v2.12.1
+  )
+  FetchContent_MakeAvailable(Catch2)
+  set(Catch2_DIR ${Catch2_SOURCE_DIR})
 
   set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${Catch2_DIR}/contrib)
 
@@ -120,6 +133,7 @@ if(EXISTS ${Catch2_DIR})
       tests/sico.c.t.cpp
   )
   add_executable(sicotests ${SICO_TEST_FILES})
+  add_dependencies(sicotests Catch2)
   target_link_libraries(sicotests sico)
   target_include_directories(sicotests PUBLIC
    ${Units_DIR}
@@ -127,6 +141,11 @@ if(EXISTS ${Catch2_DIR})
    ${Boost_INCLUDE_DIRS}
    ${Catch2_DIR}/single_include
   )
+  target_compile_options(sicotests PUBLIC ${SICO_COM_OPTS})
+  if(SICO_TEST_COVERAGE)
+    target_compile_options(sicotests PUBLIC -O0 -g -fprofile-arcs -ftest-coverage)
+    target_link_options(sicotests PUBLIC -fprofile-arcs -ftest-coverage)
+  endif()
 
   include(CTest)
   include(Catch)

@@ -50,21 +50,21 @@ template<size_t S>
 arrayd<S> operator+(arrayd<S> const& s1, arrayd<S> const& s2)
 {
     arrayd<S> s;
-    for (size_t i = 0; i < size(s); i++)
+    for (size_t i = 0; i < S; i++)
         s[i] = s1[i] + s2[i];
     return s;
 }
 template<size_t S>
 arrayd<S>& operator+=(arrayd<S>& s1, arrayd<S> const& s2)
 {
-    for (size_t i = 0; i < size(s1); i++)
+    for (size_t i = 0; i < S; i++)
         s1[i] += s2[i];
     return s1;
 }
 template<size_t S>
 arrayd<S>& operator+=(arrayd<S>& s1, scalar_t const v)
 {
-    for (size_t i = 0; i < size(s1); i++)
+    for (size_t i = 0; i < S; i++)
         s1[i] += v;
     return s1;
 }
@@ -72,7 +72,7 @@ template<size_t S>
 arrayd<S> operator-(arrayd<S> const& s1)
 {
     arrayd<S> s;
-    for (size_t i = 0; i < size(s); i++)
+    for (size_t i = 0; i < S; i++)
         s[i] = -s1[i];
     return s;
 }
@@ -80,14 +80,14 @@ template<size_t S>
 arrayd<S> operator*(arrayd<S> const& s1, scalar_t const t)
 {
     arrayd<S> s;
-    for (size_t i = 0; i < size(s); i++)
+    for (size_t i = 0; i < S; i++)
         s[i] = s1[i] * t;
     return s;
 }
 template<size_t S>
 arrayd<S>& operator*=(arrayd<S>& s, scalar_t const t)
 {
-    for (size_t i = 0; i < size(s); i++)
+    for (size_t i = 0; i < S; i++)
         s[i] *= t;
     return s;
 }
@@ -95,15 +95,15 @@ template<size_t S>
 bool operator==(arrayd<S> const& s1, arrayd<S> const& s2)
 {
     bool r = true;
-    for (size_t i = 0; i < size(s); i++)
-        r = r && eq(s1[i], s2[i]);
+    for (size_t i = 0; i < S; i++)
+        r = r && s1[i] == s2[i];
     return r;
 }
 template<size_t S>
 scalar_t dot(arrayd<S> const& s1, arrayd<S> const& s2)
 {
     scalar_t d = 0;
-    for (size_t i = 0; i < size(s1); i++) {
+    for (size_t i = 0; i < S; i++) {
         d += s1[i] * s2[i];
     }
     return d;
@@ -160,6 +160,12 @@ arrayd<S>& normalize(arrayd<S>& s)
     if (l < 0.0001)
         return s;
     s /= l;
+    return s;
+}
+template<size_t S>
+arrayd<S> normalized(arrayd<S> s)
+{
+    normalize(s);
     return s;
 }
 

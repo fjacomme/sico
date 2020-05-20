@@ -1,6 +1,5 @@
 #include "sico/types/orientations.hpp"
 
-#include "sico/conversions/sico_algebra.hpp"
 #include "sico/types/angles.hpp"
 #include "sico/types/linear_algebra.hpp"
 

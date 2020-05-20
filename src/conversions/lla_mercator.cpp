@@ -217,7 +217,7 @@ pos_lla sico::to_lla(radians lon0, pos_enu_m const& p)
     y1 = complexd(xi, eta) + a * y0;
     // Convergence and scale for Gauss-Schreiber TM to Gauss-Krueger TM.
     double       gamma = atan2(z1.imag(), z1.real());
-    double       k     = Earth.b1 / abs(z1);
+    double       k     = Earth.b1 / std::abs(z1);
     double const xip   = y1.real();
     double const etap  = y1.imag();
     double const s     = sinh(etap);
@@ -231,13 +231,13 @@ pos_lla sico::to_lla(radians lon0, pos_enu_m const& p)
         double const tol  = sqrt(std::numeric_limits<double>::epsilon()) / 10.0;
         double const taup = sxip / r;
         double       tau  = taup / Earth.e2m;
-        double const stol = tol * std::max(1.0, abs(taup));
+        double const stol = tol * std::max(1.0, std::abs(taup));
         for (int i = 0; i < 5; ++i) {
             double const taupa = taupf(tau);
             double const dtau  = (taup - taupa) * (1.0 + Earth.e2m * (tau * tau))
                 / (Earth.e2m * std::hypot(1.0, tau) * std::hypot(1.0, taupa));
             tau += dtau;
-            if (!(abs(dtau) >= stol))
+            if (!(std::abs(dtau) >= stol))
                 break;
         }
 
