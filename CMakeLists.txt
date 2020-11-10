@@ -3,7 +3,9 @@ include(FetchContent)
 include(CMakePackageConfigHelpers)
 set(CMAKE_CXX_STANDARD 17)
 
-project(sico VERSION 1.0.0)
+project(sico VERSION 1.1.0)
+
+set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/dist)
 
 option(SICO_USE_EIGEN "Use the Eigen library for linear algebra" OFF)
 option(SICO_USE_HOLTHAUS_UNITS "Use Holthaus Units library" OFF)
@@ -20,6 +22,9 @@ if(MSVC)
 else()
   set(SICO_COMP_OPTS -Wall -Wextra -pedantic -Werror -frounding-math)
 endif()
+
+set(CMAKE_DEBUG_POSTFIX "d")
+set(CMAKE_RELWITHDEBINFO_POSTFIX "rd")
 
 add_library(sico STATIC 
   include/sico/sico.hpp
@@ -94,7 +99,9 @@ target_compile_options(sico PRIVATE ${SICO_COM_OPTS})
 
 install(TARGETS sico DESTINATION lib EXPORT sico-config)
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include DESTINATION ".")
-install(DIRECTORY ${Units_DIR}/units DESTINATION "include/units")
+if (Units_DIR)
+  install(DIRECTORY ${Units_DIR}/units DESTINATION "include/units")
+endif()
 export(TARGETS sico FILE sico-config.cmake)
 install(EXPORT sico-config DESTINATION cmake)
 write_basic_package_version_file(sico-config-version.cmake COMPATIBILITY SameMajorVersion)
@@ -142,7 +149,7 @@ if (SICO_BUILD_TESTS)
    ${Catch2_DIR}/single_include
   )
   target_compile_options(sicotests PUBLIC ${SICO_COM_OPTS})
-  if(SICO_TEST_COVERAGE)
+  if(SICO_TEST_COVERAGE AND NOT MSVC)
     target_compile_options(sicotests PUBLIC -O0 -g -fprofile-arcs -ftest-coverage)
     target_link_options(sicotests PUBLIC -fprofile-arcs -ftest-coverage)
   endif()

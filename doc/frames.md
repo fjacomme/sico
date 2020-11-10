@@ -12,7 +12,7 @@ See [frames/local_tangent.hpp](../include/sico/frames/local_tangent.hpp).
 
 ## mercator
 
-This frames converts a geodetic *LLA* position to an *east-north-up* local position, relative to mercator projection centered on the reference longitude.
+This frames converts a geodetic *LLA* position to an *east-north-up* local position, relative to mercator projection centered on the reference position.
 
 See [frames/mercator.hpp](../include/sico/frames/mercator.hpp).
 

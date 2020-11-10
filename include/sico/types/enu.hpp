@@ -73,7 +73,7 @@ bool approx_eq(vec_enu<U, Ref> const& p1, vec_enu<U, Ref> const& p2, U p)
 template<typename U, typename Ref>
 bool operator==(vec_enu<U, Ref> const& p1, vec_enu<U, Ref> const& p2)
 {
-    return approx_eq(p1, p2, U(0.001)); // millimeter precision is usually good enough
+    return approx_eq(p1, p2, U(0.01)); // centimeter precision is usually good enough
 }
 template<typename U, typename Ref>
 bool operator!=(vec_enu<U, Ref> const& p1, vec_enu<U, Ref> const& p2)

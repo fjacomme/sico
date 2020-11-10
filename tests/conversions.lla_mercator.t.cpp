@@ -19,7 +19,7 @@ void test(radians lonref, pos_lla const& lla, pos_enu_m const& ref)
 
 void testzero(double lat, double lon, double x, double y)
 {
-    INFO("test: " << lat << " " << lon << " " << x << " " << y);
+    INFO("testo: " << lat << " " << lon << " " << x << " " << y);
     auto const      lonref(0_rad);
     pos_lla const   lla { degrees(lat), degrees(lon), 0_m };
     pos_enu_m const enu { meters(x), meters(y), 0_m };

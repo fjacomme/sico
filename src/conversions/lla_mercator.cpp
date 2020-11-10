@@ -128,12 +128,10 @@ pos_enu_m sico::to_enu(radians lon0, pos_lla const& p)
     bool const   backside = lonDiff > SICO_PI2;
     double const lon      = backside ? SICO_PI - lonDiff : lonDiff;
 
-    double const latsign = (backside && lat == 0) ? -1.0 : std::copysign(1.0, lat);
-    double const lonsign = std::copysign(1.0, lon);
-    double const sphi    = sin(lat);
-    double const cphi    = cos(lat);
-    double const slam    = sin(lon);
-    double const clam    = cos(lon);
+    double const sphi = sin(lat);
+    double const cphi = cos(lat);
+    double const slam = sin(lon);
+    double const clam = cos(lon);
 
     double const tau = sphi / cphi, taup = taupf(tau);
     double const xip    = atan2(taup, clam);
@@ -173,8 +171,8 @@ pos_enu_m sico::to_enu(radians lon0, pos_lla const& p)
     // Gauss-Krueger TM.
     double const xi  = y1.real();
     double const eta = y1.imag();
-    double const y   = Earth.a1 * Earth.k0 * xi * latsign;
-    double const x   = Earth.a1 * Earth.k0 * eta * lonsign;
+    double const y   = Earth.a1 * Earth.k0 * xi;
+    double const x   = Earth.a1 * Earth.k0 * eta;
     return pos_enu_m { meters(x), meters(y), p.alt };
 }
 
